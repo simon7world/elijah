@@ -1,10 +1,10 @@
 /**
- * Elijah JavaScript Collection Library v0.3
+ * Elijah JavaScript Collection Library v0.4
  * Copyright 2013 Simon P Chang.
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: SUN, JAN 27 2013
+ * Date: SUN, JAN 28 2013
  * 
  **/
 
@@ -47,8 +47,9 @@ _l.prototype = {
 		return this._arr[i];
 	},
 	setRange: function (vs) {
-		if (vs && vs.length) this._arr = this._arr.concat(vs);
-		else if (vs && vs.size && vs.size()) this._arr = this._arr.concat(vs._arr);
+		if (vs && typeof vs === "object")
+			if (vs.length) this._arr = this._arr.concat(vs);
+			else if (vs.size && vs.size()) this._arr = this._arr.concat(vs._arr);
 	},
 	contains: function (v) {
 		return this._arr.indexOf(v) !== -1;
@@ -65,7 +66,7 @@ _l.prototype = {
 			this._arr[i] === v && inds.push(parseInt(i, 10));
 		return inds;
 	},
-	isEmpty: function () {
+	empty: function () {
 		return this._arr.length === 0;
 	},
 	removeAt: function (i) {
@@ -92,7 +93,7 @@ _l.prototype = {
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
-			for (var i in this._arr) fn(i, this._arr[i]);
+			for (var i in this._arr) if (fn(i, this._arr[i]) === false) break;
 	},
 	toString: function () {
 		return this._arr.toString();
@@ -144,12 +145,12 @@ _m.prototype = {
 		for (var k in this._map)
 			this._map[k] === v && this.remove(k); 
 	},
-	isEmpty: function () {
+	empty: function () {
 		return this._size === 0;
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
-			for (var k in this._map) fn(k, this._map[k]);
+			for (var k in this._map) if (fn(k, this._map[k]) === false) break;
 	},
 	keys: function () {
 		var ks = [];
@@ -166,8 +167,55 @@ _m.prototype = {
 	}
 }
 
+// Stack Class
+var _s = function (vs) {
+	this._arr = [];
+	this.pushRange(vs);
+}
+_s.prototype = {
+	size: function () {
+		return this._arr.length;
+	},
+	clear: function () {
+		this._arr = [];
+	},
+	push: function (v) {
+		v !== undefined && this._arr.push(v);
+	},
+	pop: function () {
+		return this._arr.pop();
+	},
+	pushRange: function (vs) {
+		if (vs && typeof vs === "object")
+			if (vs.length) this._arr = this._arr.concat(vs);
+			else if (vs.size && vs.size()) this._arr = this._arr.concat(vs._arr);
+	},
+	peek: function () {
+		return this._arr[this._arr.length - 1];
+	},
+	contains: function (v) {
+		return this._arr.indexOf(v) !== -1;
+	},
+	empty: function () {
+		return this._arr.length === 0;
+	},
+	toArray: function () {
+		var newArr = [];
+		for (var i = this._arr.length - 1; i >= 0; i--) newArr.push(this._arr[i]);
+		return newArr;
+	},
+	each: function (fn) {
+		if (typeof fn === "function")
+			while (!this.empty()) if (fn(this.pop()) === false) break;
+	},
+	toString: function () {
+		return this._arr.toString();
+	}
+}
+
 // Add Class to Window
 window.List = _l;
 window.Map = _m;
+window.Stack = _s;
 
 }());

@@ -48,11 +48,15 @@ test ("clear", function () {
 test ("get", function () {
 	equal(list.get(0), "123");
 	equal(list.get(3), undefined);
+	equal(list.get(undefined), undefined);
 	equal(list.get(), undefined);
 });
 test ("setRange", function () {
 	var tmpList = new List(["1", "2", "3"]);
 	list.setRange(tmpList);
+	list.setRange("4");
+	list.setRange(undefined);
+	list.setRange();
 	equal(list.get(3), "1");
 	equal(list.get(4), "2");
 	tmpList.clear();
@@ -61,30 +65,31 @@ test ("setRange", function () {
 });
 test ("contains", function () {
 	ok(list.contains(456));
-	ok(!list.contains());
+	ok(!list.contains("456"));
 	ok(!list.contains(undefined));
+	ok(!list.contains());
 });
 test ("indexOf", function () {
 	equal(list.indexOf(null), 2);
-	equal(list.indexOf(), -1);
 	equal(list.indexOf(undefined), -1);
+	equal(list.indexOf(), -1);
 });
 test ("lastIndexOf", function () {
 	list.set("123");
 	equal(list.lastIndexOf("123"), 3);
-	equal(list.lastIndexOf(), -1);
 	equal(list.lastIndexOf(undefined), -1);
+	equal(list.lastIndexOf(), -1);
 });
 test ("indicesOf", function () {
 	list.set(null);
 	equal(list.indicesOf(null).toString(), [2, 3].toString());
-	equal(list.indicesOf().toString(), [].toString());
 	equal(list.indicesOf(undefined).toString(), [].toString());
+	equal(list.indicesOf().toString(), [].toString());
 });
-test ("isEmpty", function () {
-	ok(!list.isEmpty());
+test ("empty", function () {
+	ok(!list.empty());
 	list.clear();
-	ok(list.isEmpty());
+	ok(list.empty());
 });
 test ("removeAt", function () {
 	list.removeAt(-1);
@@ -119,7 +124,7 @@ test ("removeAll", function () {
 	equal(list.size(), 2);
 	equal(list.get(0), 456);
 	list.removeAll();
-	ok(list.isEmpty());
+	ok(list.empty());
 });
 test ("reverse", function () {
 	equal(list.get(0), "123");
@@ -214,10 +219,10 @@ test ("removeByValue", function () {
 	map.removeByValue();
 	equal(map.size(), 2);
 });
-test ("isEmpty", function () {
-	ok(!map.isEmpty());
+test ("empty", function () {
+	ok(!map.empty());
 	map.clear();
-	ok(map.isEmpty());
+	ok(map.empty());
 });
 test ("each", function () {
 	map.each(function (k, v) {
@@ -233,4 +238,80 @@ test ("values", function () {
 	equal(map.values().toString(), ["123", 456, null].toString());
 	map.clear();
 	equal(map.values().toString(), [].toString());
+});
+
+
+module("Stack Function Testing", {
+	setup: function() {
+		stack = new Stack();
+		stack.push("123");
+		stack.push(456);
+		stack.push(null);
+		stack.push(undefined);
+		stack.push();
+	},
+	teardown: function() {
+		delete stack;
+	}
+});
+test ("toString", function () {
+	equal(stack.toString(), "['123',456,null]");
+});
+test ("new", function () {
+	equal(typeof stack, "object");
+	var arr = [1, 2, 3];
+	var newStack = new Stack(arr);
+	equal(typeof newStack, "object");
+	equal(newStack.toString(), [1, 2, 3].toString());
+	arr.pop();
+	equal(newStack.toString(), [1, 2, 3].toString());
+});
+test ("size", function () {
+	equal(stack.size(), 3);
+});
+test ("clear", function () {
+	stack.clear();
+	equal(stack.size(), 0);
+});
+test ("pop", function () {
+	equal(stack.pop(), null);
+	equal(stack.pop(), 456);
+	equal(stack.pop(), "123");
+	equal(stack.pop(), undefined);
+	equal(stack.size(), 0);
+});
+test ("pushRange", function () {
+	var tmpList = new List(["1", "2", "3"]);
+	stack.pushRange(tmpList);
+	equal(stack.pop(), "3");
+	equal(stack.pop(), "2");
+	tmpList.clear();
+	equal(stack.pop(), "1");
+});
+test ("peek", function () {
+	equal(stack.peek(), null);
+	equal(stack.size(), 3);
+});
+test ("contains", function () {
+	ok(stack.contains(456));
+	ok(!stack.contains("456"));
+	ok(!stack.contains());
+	ok(!stack.contains(undefined));
+});
+test ("empty", function () {
+	ok(!stack.empty());
+	stack.clear();
+	ok(stack.empty());
+});
+test ("toArray", function () {
+	var arr = stack.toArray();
+	equal(arr.toString(), [null, 456, "123"].toString());
+	arr.pop();
+	equal(stack.toArray().toString(), [null, 456, "123"].toString());
+});
+test ("each", function () {
+	stack.each(function (v) {
+		ok(v !== undefined);
+	});
+	ok(stack.empty());
 });
