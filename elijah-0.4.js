@@ -28,49 +28,67 @@ String.prototype.toString = function () {
 	return "'" + this + "'";
 }
 
+function extend(Child, Parent) {
+	var O = function () {};
+	O.prototype = Parent.prototype;
+	Child.prototype = new O();
+	Child.prototype.constructor = Child;
+	Child.uber = Parent.prototype;
+}
+
+// Elijah Class
+var _elj = function () {
+	this._ctn;
+}
+_elj.prototype = {
+	toString: function () {
+		return this._ctn.toString();
+	}
+}
+
 // List Class
 var _l = function (vs) {
-	this._arr = [];
+	this._ctn = [];
 	this.setRange(vs);
 }
+extend(_l, _elj);
 _l.prototype = {
 	size: function () {
-		return this._arr.length;
+		return this._ctn.length;
 	},
 	clear: function () {
-		this._arr = [];
+		this._ctn = [];
 	},
 	set: function (v) {
-		v !== undefined && this._arr.push(v);
+		v !== undefined && this._ctn.push(v);
 	},
 	get: function (i) {
-		return this._arr[i];
+		return this._ctn[i];
 	},
 	setRange: function (vs) {
-		if (vs && typeof vs === "object")
-			if (vs.length) this._arr = this._arr.concat(vs);
-			else if (vs.size && vs.size()) this._arr = this._arr.concat(vs._arr);
+		if (vs instanceof Array && vs.length) this._ctn = this._ctn.concat(vs);
+		else if (vs instanceof List && vs.size && vs.size()) this._ctn = this._ctn.concat(vs._ctn);
 	},
 	contains: function (v) {
-		return this._arr.indexOf(v) !== -1;
+		return this._ctn.indexOf(v) !== -1;
 	},
 	indexOf: function (v) {
-		return this._arr.indexOf(v);
+		return this._ctn.indexOf(v);
 	},
 	lastIndexOf: function (v) {
-		return this._arr.lastIndexOf(v);
+		return this._ctn.lastIndexOf(v);
 	},
 	indicesOf: function (v) {
 		var inds = [];
-		for (var i in this._arr)
-			this._arr[i] === v && inds.push(parseInt(i, 10));
+		for (var i in this._ctn)
+			this._ctn[i] === v && inds.push(parseInt(i, 10));
 		return inds;
 	},
 	empty: function () {
-		return this._arr.length === 0;
+		return this._ctn.length === 0;
 	},
 	removeAt: function (i) {
-		i >= 0 && i < this._arr.length && this._arr.splice(i, 1);
+		i >= 0 && i < this._ctn.length && this._ctn.splice(i, 1);
 	},
 	remove: function (v) {
 		this.removeAt(this.indexOf(v));
@@ -80,137 +98,132 @@ _l.prototype = {
 	},
 	removeAll: function (v) {
 		if (v === undefined) this.clear();
-		else for (var i = this._arr.length - 1; i >= 0; i--)
-			this._arr[i] === v && this.removeAt(i);
+		else for (var i = this._ctn.length - 1; i >= 0; i--)
+			this._ctn[i] === v && this.removeAt(i);
 	},
 	reverse: function () {
-		this._arr.reverse();
+		this._ctn.reverse();
 	},
 	toArray: function () {
 		var newArr = [];
-		for (var i in this._arr) newArr.push(this._arr[i]);
+		for (var i in this._ctn) newArr.push(this._ctn[i]);
 		return newArr;
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
-			for (var i in this._arr) if (fn(i, this._arr[i]) === false) break;
+			for (var i in this._ctn) if (fn(i, this._ctn[i]) === false) break;
 	},
-	toString: function () {
-		return this._arr.toString();
-	}
+	toString: _l.uber.toString
 }
 
 // Map Class
 var _m = function () {
-	this._map = {}, this._size = 0;
+	this._ctn = {}, this._size = 0;
 }
+extend(_m, _elj);
 _m.prototype = {
 	size: function () {
 		return this._size;
 	},
 	clear: function () {
-		this._map = {};
+		this._ctn = {};
 		this._size = 0;
 	},
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
-			this._map[k] === undefined && this._size++;
-			this._map[k] = v;
+			this._ctn[k] === undefined && this._size++;
+			this._ctn[k] = v;
 		}
 	},
 	get: function (k) {
-		return this._map[k];
+		return this._ctn[k];
 	},
 	getByValue: function (v) {
 		if (v !== undefined) {
 			var ks = [];
-			for (var k in this._map) this._map[k] === v && ks.push(k);
+			for (var k in this._ctn) this._ctn[k] === v && ks.push(k);
 			return ks;
 		}
 	},
 	containsKey: function (k) {
-		for (var key in this._map)
+		for (var key in this._ctn)
 			if (key === k) return true;
 		return false;
 	},
 	containsValue: function (v) {
-		for (var k in this._map)
-			if (this._map[k] === v) return true;
+		for (var k in this._ctn)
+			if (this._ctn[k] === v) return true;
 		return false;
 	},
 	remove: function (k) {
-		k !== undefined && (delete this._map[k], this._size--);
+		k !== undefined && (delete this._ctn[k], this._size--);
 	},
 	removeByValue: function (v) {
-		for (var k in this._map)
-			this._map[k] === v && this.remove(k); 
+		for (var k in this._ctn)
+			this._ctn[k] === v && this.remove(k); 
 	},
 	empty: function () {
 		return this._size === 0;
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
-			for (var k in this._map) if (fn(k, this._map[k]) === false) break;
+			for (var k in this._ctn) if (fn(k, this._ctn[k]) === false) break;
 	},
 	keys: function () {
 		var ks = [];
-		for (var k in this._map) ks.push(k);
+		for (var k in this._ctn) ks.push(k);
 		return ks;
 	},
 	values: function () {
 		var vs = [];
-		for (var k in this._map) vs.push(this._map[k]);
+		for (var k in this._ctn) vs.push(this._ctn[k]);
 		return vs;
 	},
-	toString: function () {
-		return this._map.toString();
-	}
+	toString: _m.uber.toString
 }
 
 // Stack Class
 var _s = function (vs) {
-	this._arr = [];
+	this._ctn = [];
 	this.pushRange(vs);
 }
+extend(_s, _elj);
 _s.prototype = {
 	size: function () {
-		return this._arr.length;
+		return this._ctn.length;
 	},
 	clear: function () {
-		this._arr = [];
+		this._ctn = [];
 	},
 	push: function (v) {
-		v !== undefined && this._arr.push(v);
+		v !== undefined && this._ctn.push(v);
 	},
 	pop: function () {
-		return this._arr.pop();
+		return this._ctn.pop();
 	},
 	pushRange: function (vs) {
-		if (vs && typeof vs === "object")
-			if (vs.length) this._arr = this._arr.concat(vs);
-			else if (vs.size && vs.size()) this._arr = this._arr.concat(vs._arr);
+		if (vs instanceof Array && vs.length) this._ctn = this._ctn.concat(vs);
+		else if (vs instanceof List && vs.size && vs.size()) this._ctn = this._ctn.concat(vs._ctn);
 	},
 	peek: function () {
-		return this._arr[this._arr.length - 1];
+		return this._ctn[this._ctn.length - 1];
 	},
 	contains: function (v) {
-		return this._arr.indexOf(v) !== -1;
+		return this._ctn.indexOf(v) !== -1;
 	},
 	empty: function () {
-		return this._arr.length === 0;
+		return this._ctn.length === 0;
 	},
 	toArray: function () {
 		var newArr = [];
-		for (var i = this._arr.length - 1; i >= 0; i--) newArr.push(this._arr[i]);
+		for (var i = this._ctn.length - 1; i >= 0; i--) newArr.push(this._ctn[i]);
 		return newArr;
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
 			while (!this.empty()) if (fn(this.pop()) === false) break;
 	},
-	toString: function () {
-		return this._arr.toString();
-	}
+	toString: _s.uber.toString
 }
 
 // Add Class to Window
