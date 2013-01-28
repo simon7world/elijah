@@ -46,13 +46,13 @@ _elj.prototype = {
 	}
 }
 
-// List Class
-var _l = function (vs) {
+// The [] Implementation Class's Parent
+var _ai = function () {
+	_elj.apply(this, arguments);
 	this._ctn = [];
-	this.setRange(vs);
 }
-extend(_l, _elj);
-_l.prototype = {
+extend(_ai, _elj);
+_ai.prototype = {
 	size: function () {
 		return this._ctn.length;
 	},
@@ -62,9 +62,6 @@ _l.prototype = {
 	set: function (v) {
 		v !== undefined && this._ctn.push(v);
 	},
-	get: function (i) {
-		return this._ctn[i];
-	},
 	setRange: function (vs) {
 		if (vs instanceof Array && vs.length) this._ctn = this._ctn.concat(vs);
 		else if (vs instanceof List && vs.size && vs.size()) this._ctn = this._ctn.concat(vs._ctn);
@@ -72,6 +69,47 @@ _l.prototype = {
 	contains: function (v) {
 		return this._ctn.indexOf(v) !== -1;
 	},
+	empty: function () {
+		return this._ctn.length === 0;
+	},
+	toArray: function () {
+		var newArr = [];
+		for (var i in this._ctn) newArr.push(this._ctn[i]);
+		return newArr;
+	},
+	each: function (fn) {
+		if (typeof fn === "function")
+			for (var i in this._ctn) if (fn(i, this._ctn[i]) === false) break;
+	},
+	toString: _ai.uber.toString
+}
+
+// The {} Implementation Class's Parent
+var _oi = function () {
+	_elj.apply(this, arguments);
+	this._ctn = {}, this._size = 0;
+}
+extend(_oi, _elj);
+_oi.prototype = {
+	
+	toString: _oi.uber.toString
+}
+
+// List Class
+var _l = function (vs) {
+	_ai.apply(this, arguments);
+	this.setRange(vs);
+}
+extend(_l, _ai);
+_l.prototype = {
+	size: _l.uber.size,
+	clear: _l.uber.clear,
+	set: _l.uber.set,
+	get: function (i) {
+		return this._ctn[i];
+	},
+	setRange: _l.uber.setRange,
+	contains: _l.uber.contains,
 	indexOf: function (v) {
 		return this._ctn.indexOf(v);
 	},
@@ -84,9 +122,7 @@ _l.prototype = {
 			this._ctn[i] === v && inds.push(parseInt(i, 10));
 		return inds;
 	},
-	empty: function () {
-		return this._ctn.length === 0;
-	},
+	empty: _l.uber.empty,
 	removeAt: function (i) {
 		i >= 0 && i < this._ctn.length && this._ctn.splice(i, 1);
 	},
@@ -104,21 +140,14 @@ _l.prototype = {
 	reverse: function () {
 		this._ctn.reverse();
 	},
-	toArray: function () {
-		var newArr = [];
-		for (var i in this._ctn) newArr.push(this._ctn[i]);
-		return newArr;
-	},
-	each: function (fn) {
-		if (typeof fn === "function")
-			for (var i in this._ctn) if (fn(i, this._ctn[i]) === false) break;
-	},
+	toArray: _l.uber.toArray,
+	each: _l.uber.each,
 	toString: _l.uber.toString
 }
 
 // Map Class
 var _m = function () {
-	this._ctn = {}, this._size = 0;
+	_oi.apply(this, arguments);
 }
 extend(_m, _elj);
 _m.prototype = {
@@ -184,36 +213,23 @@ _m.prototype = {
 
 // Stack Class
 var _s = function (vs) {
-	this._ctn = [];
+	_ai.apply(this, arguments);
 	this.pushRange(vs);
 }
-extend(_s, _elj);
+extend(_s, _ai);
 _s.prototype = {
-	size: function () {
-		return this._ctn.length;
-	},
-	clear: function () {
-		this._ctn = [];
-	},
-	push: function (v) {
-		v !== undefined && this._ctn.push(v);
-	},
+	size: _s.uber.size,
+	clear: _s.uber.clear,
+	push: _s.uber.set,
 	pop: function () {
 		return this._ctn.pop();
 	},
-	pushRange: function (vs) {
-		if (vs instanceof Array && vs.length) this._ctn = this._ctn.concat(vs);
-		else if (vs instanceof List && vs.size && vs.size()) this._ctn = this._ctn.concat(vs._ctn);
-	},
+	pushRange: _s.uber.setRange,
 	peek: function () {
 		return this._ctn[this._ctn.length - 1];
 	},
-	contains: function (v) {
-		return this._ctn.indexOf(v) !== -1;
-	},
-	empty: function () {
-		return this._ctn.length === 0;
-	},
+	contains: _s.uber.contains,
+	empty: _s.uber.empty,
 	toArray: function () {
 		var newArr = [];
 		for (var i = this._ctn.length - 1; i >= 0; i--) newArr.push(this._ctn[i]);
