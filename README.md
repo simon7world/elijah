@@ -5,16 +5,16 @@ Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
 List
-====
+----
 <h3>Methods:</h3>
 size<br>
 clear<br>
 
 Map
-===
-Methods:
+---
+<h3>Methods:</h3>
 
 
 Stack
-=====
-Methods:
+-----
+<h3>Methods:</h3>
