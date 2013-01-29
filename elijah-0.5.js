@@ -1,10 +1,10 @@
 /**
- * Elijah JavaScript Collection Library v0.4
+ * Elijah JavaScript Collection Library v0.5
  * Copyright 2013 Simon P Chang.
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: SUN, JAN 28 2013
+ * Date: TUE, JAN 29 2013
  * 
  **/
 
@@ -26,14 +26,6 @@ Date.prototype.toString = function () {
 }
 String.prototype.toString = function () {
 	return "'" + this + "'";
-}
-
-function extend(Child, Parent) {
-	var O = function () {};
-	O.prototype = Parent.prototype;
-	Child.prototype = new O();
-	Child.prototype.constructor = Child;
-	Child.uber = Parent.prototype;
 }
 
 // Elijah Class
@@ -70,7 +62,7 @@ _ai.prototype = {
 		return this._ctn.indexOf(v) !== -1;
 	},
 	empty: function () {
-		return this._ctn.length === 0;
+		return this.size() === 0;
 	},
 	toArray: function () {
 		var newArr = [];
@@ -124,7 +116,10 @@ _l.prototype = {
 	},
 	empty: _l.uber.empty,
 	removeAt: function (i) {
-		i >= 0 && i < this._ctn.length && this._ctn.splice(i, 1);
+		i >= 0 && i < this.size() && this._ctn.splice(i, 1);
+	},
+	removeRange: function (fi, ti) {
+		fi >= 0 && fi < ti && this._ctn.splice(fi, ti - fi);
 	},
 	remove: function (v) {
 		this.removeAt(this.indexOf(v));
@@ -134,7 +129,7 @@ _l.prototype = {
 	},
 	removeAll: function (v) {
 		if (v === undefined) this.clear();
-		else for (var i = this._ctn.length - 1; i >= 0; i--)
+		else for (var i = this.size() - 1; i >= 0; i--)
 			this._ctn[i] === v && this.removeAt(i);
 	},
 	reverse: function () {
@@ -221,30 +216,66 @@ _s.prototype = {
 	size: _s.uber.size,
 	clear: _s.uber.clear,
 	push: _s.uber.set,
+	pushRange: _s.uber.setRange,
+	contains: _s.uber.contains,
+	empty: _s.uber.empty,
+	toString: _s.uber.toString,
 	pop: function () {
 		return this._ctn.pop();
 	},
-	pushRange: _s.uber.setRange,
 	peek: function () {
-		return this._ctn[this._ctn.length - 1];
+		return this._ctn[this.size() - 1];
 	},
-	contains: _s.uber.contains,
-	empty: _s.uber.empty,
 	toArray: function () {
 		var newArr = [];
-		for (var i = this._ctn.length - 1; i >= 0; i--) newArr.push(this._ctn[i]);
+		for (var i = this.size() - 1; i >= 0; i--) newArr.push(this._ctn[i]);
 		return newArr;
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
 			while (!this.empty()) if (fn(this.pop()) === false) break;
+	}
+}
+
+// Queue Class
+var _q = function (vs) {
+	_ai.apply(this, arguments);
+	this.offerRange(vs);
+}
+extend(_q, _ai);
+_q.prototype = {
+	size: _q.uber.size,
+	clear: _q.uber.clear,
+	offer: _q.uber.set,
+	offerRange: _q.uber.setRange,
+	contains: _q.uber.contains,
+	empty: _q.uber.empty,
+	toArray: _q.uber.toArray,
+	toString: _q.uber.toString,
+	poll: function () {
+		return this._ctn.shift();
 	},
-	toString: _s.uber.toString
+	peek: function () {
+		return this._ctn[0];
+	},
+	each: function (fn) {
+		if (typeof fn === "function")
+			while (!this.empty()) if (fn(this.poll()) === false) break;
+	}
 }
 
 // Add Class to Window
 window.List = _l;
 window.Map = _m;
 window.Stack = _s;
+window.Queue = _q;
+
+function extend(Child, Parent) {
+	var O = function () {};
+	O.prototype = Parent.prototype;
+	Child.prototype = new O();
+	Child.prototype.constructor = Child;
+	Child.uber = Parent.prototype;
+}
 
 }());

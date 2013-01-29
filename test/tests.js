@@ -101,6 +101,16 @@ test ("removeAt", function () {
 	equal(list.size(), 2);
 	equal(list.get(0), 456);
 });
+test ("removeRange", function () {
+	list.removeRange(-1, 2);
+	list.removeRange(1, 1);
+	equal(list.size(), 3);
+	list.removeRange(1, 2);
+	equal(list.size(), 2);
+	equal(list.get(1), null);
+	list.removeRange(0, 100);
+	ok(list.empty());
+});
 test ("remove", function () {
 	list.remove();
 	list.remove(undefined);
@@ -254,25 +264,6 @@ module("Stack Function Testing", {
 		delete stack;
 	}
 });
-test ("toString", function () {
-	equal(stack.toString(), "['123',456,null]");
-});
-test ("new", function () {
-	equal(typeof stack, "object");
-	var arr = [1, 2, 3];
-	var newStack = new Stack(arr);
-	equal(typeof newStack, "object");
-	equal(newStack.toString(), [1, 2, 3].toString());
-	arr.pop();
-	equal(newStack.toString(), [1, 2, 3].toString());
-});
-test ("size", function () {
-	equal(stack.size(), 3);
-});
-test ("clear", function () {
-	stack.clear();
-	equal(stack.size(), 0);
-});
 test ("pop", function () {
 	equal(stack.pop(), null);
 	equal(stack.pop(), 456);
@@ -280,28 +271,11 @@ test ("pop", function () {
 	equal(stack.pop(), undefined);
 	equal(stack.size(), 0);
 });
-test ("pushRange", function () {
-	var tmpList = new List(["1", "2", "3"]);
-	stack.pushRange(tmpList);
-	equal(stack.pop(), "3");
-	equal(stack.pop(), "2");
-	tmpList.clear();
-	equal(stack.pop(), "1");
-});
 test ("peek", function () {
 	equal(stack.peek(), null);
 	equal(stack.size(), 3);
-});
-test ("contains", function () {
-	ok(stack.contains(456));
-	ok(!stack.contains("456"));
-	ok(!stack.contains());
-	ok(!stack.contains(undefined));
-});
-test ("empty", function () {
-	ok(!stack.empty());
 	stack.clear();
-	ok(stack.empty());
+	equal(stack.peek(), undefined);
 });
 test ("toArray", function () {
 	var arr = stack.toArray();
@@ -314,4 +288,38 @@ test ("each", function () {
 		ok(v !== undefined);
 	});
 	ok(stack.empty());
+});
+
+
+module("Queue Function Testing", {
+	setup: function() {
+		queue = new Queue();
+		queue.offer("123");
+		queue.offer(456);
+		queue.offer(null);
+		queue.offer(undefined);
+		queue.offer();
+	},
+	teardown: function() {
+		delete queue;
+	}
+});
+test ("poll", function () {
+	equal(queue.poll(), "123");
+	equal(queue.poll(), 456);
+	equal(queue.poll(), null);
+	equal(queue.poll(), undefined);
+	equal(queue.size(), 0);
+});
+test ("peek", function () {
+	equal(queue.peek(), "123");
+	equal(queue.size(), 3);
+	queue.clear();
+	equal(queue.peek(), undefined);
+});
+test ("each", function () {
+	queue.each(function (v) {
+		ok(v !== undefined);
+	});
+	ok(queue.empty());
 });
