@@ -15,13 +15,13 @@ List
 * get(index)
 * setRange(values) -- values: Array or List
 * contains(value)
-* indexOf(value)
+* indexOf(value) -- first index
 * lastIndexOf(value)
 * indicesOf(value)
 * empty()
 * removeAt(index)
 * removeRange(from, to) -- from >= index < to
-* remove(value)
+* remove(value) -- remove first
 * removeLast(value)
 * removeAll(value)
 * reverse()
@@ -36,11 +36,11 @@ Map
 * size()
 * clear()
 * set(key, value) -- key: not undefined, value: not undefined
-* get(key)
+* get(key) -- get by key
 * getByValue(value)
 * containsKey(key)
 * containsValue(value)
-* remove(key)
+* remove(key) -- remove by key
 * removeByValue(value)
 * empty()
 * each(fn) -- fn: function(key, value)
