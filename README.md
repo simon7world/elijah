@@ -1,14 +1,14 @@
 Elijah JavaScript Collection Library
 ====================================
-Copyright 2013 Simon P Chang.
-Author: Simon P Chang
+<h3>Copyright 2013 Simon P Chang.</h3>
+Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
 List
 ====
-Methods:
-	size
-clear
+<h3>Methods:</h3>
+size<br>
+clear<br>
 
 Map
 ===
