@@ -129,7 +129,7 @@ _l.prototype = {
 	},
 	removeAll: function (v) {
 		if (v === undefined) this.clear();
-		else for (var i = this.size() - 1; i >= 0; i--)
+		else for (var i = this.size(); i--;)
 			this._ctn[i] === v && this.removeAt(i);
 	},
 	reverse: function () {
@@ -150,8 +150,7 @@ _m.prototype = {
 		return this._size;
 	},
 	clear: function () {
-		this._ctn = {};
-		this._size = 0;
+		this._ctn = {}, this._size = 0;
 	},
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
@@ -228,7 +227,7 @@ _s.prototype = {
 	},
 	toArray: function () {
 		var newArr = [];
-		for (var i = this.size() - 1; i >= 0; i--) newArr.push(this._ctn[i]);
+		for (var i = this.size(); i--;) newArr.push(this._ctn[i]);
 		return newArr;
 	},
 	each: function (fn) {
@@ -265,10 +264,7 @@ _q.prototype = {
 }
 
 // Add Class to Window
-window.List = _l;
-window.Map = _m;
-window.Stack = _s;
-window.Queue = _q;
+window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q;
 
 function extend(Child, Parent) {
 	var O = function () {};
