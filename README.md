@@ -1,6 +1,7 @@
 Elijah JavaScript Collection Library
 ====================================
 ### Copyright 2013 Simon P Chang.
+Last Version: 0.4<br>
 Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
