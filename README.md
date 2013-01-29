@@ -31,7 +31,33 @@ Map
 ---
 ### Methods:
 
+* size
+* clear
+* set
+* get
+* getByValue
+* containsKey
+* containsValue
+* remove
+* removeByValue
+* empty
+* each
+* keys
+* values
+* toString
 
 Stack
 -----
 ### Methods:
+
+* size
+* clear
+* push
+* pop
+* pushRange
+* peek
+* contains
+* empty
+* toArray
+* each
+* toString
