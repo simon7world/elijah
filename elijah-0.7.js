@@ -1,10 +1,10 @@
 /**
- * Elijah JavaScript Collection Library v0.5
+ * Elijah JavaScript Collection Library v0.7
  * Copyright 2013 Simon P Chang.
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: TUE, JAN 29 2013
+ * Date: Fri, Feb 1 2013
  * 
  **/
 
@@ -83,7 +83,40 @@ var _oi = function () {
 }
 extend(_oi, _elj);
 _oi.prototype = {
-	
+	size: function () {
+		return this._size;
+	},
+	clear: function () {
+		this._ctn = {}, this._size = 0;
+	},
+	get: function (k) {
+		return this._ctn[k];
+	},
+	containsKey: function (k) {
+		for (var key in this._ctn)
+			if (key === k) return true;
+		return false;
+	},
+	remove: function (k) {
+		k !== undefined && (delete this._ctn[k], this._size--);
+	},
+	empty: function () {
+		return this._size === 0;
+	},
+	each: function (fn) {
+		if (typeof fn === "function")
+			for (var k in this._ctn) if (fn(k, this._ctn[k]) === false) break;
+	},
+	keys: function () {
+		var ks = [];
+		for (var k in this._ctn) ks.push(k);
+		return ks;
+	},
+	values: function () {
+		var vs = [];
+		for (var k in this._ctn) vs.push(this._ctn[k]);
+		return vs;
+	},
 	toString: _oi.uber.toString
 }
 
@@ -144,23 +177,17 @@ _l.prototype = {
 var _m = function () {
 	_oi.apply(this, arguments);
 }
-extend(_m, _elj);
+extend(_m, _oi);
 _m.prototype = {
-	size: function () {
-		return this._size;
-	},
-	clear: function () {
-		this._ctn = {}, this._size = 0;
-	},
+	size: _m.uber.size,
+	clear: _m.uber.clear,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
 			this._ctn[k] === undefined && this._size++;
 			this._ctn[k] = v;
 		}
 	},
-	get: function (k) {
-		return this._ctn[k];
-	},
+	get: _m.uber.get,
 	getByValue: function (v) {
 		if (v !== undefined) {
 			var ks = [];
@@ -168,40 +195,21 @@ _m.prototype = {
 			return ks;
 		}
 	},
-	containsKey: function (k) {
-		for (var key in this._ctn)
-			if (key === k) return true;
-		return false;
-	},
+	containsKey: _m.uber.containsKey,
 	containsValue: function (v) {
 		for (var k in this._ctn)
 			if (this._ctn[k] === v) return true;
 		return false;
 	},
-	remove: function (k) {
-		k !== undefined && (delete this._ctn[k], this._size--);
-	},
+	remove: _m.uber.remove,
 	removeByValue: function (v) {
 		for (var k in this._ctn)
 			this._ctn[k] === v && this.remove(k); 
 	},
-	empty: function () {
-		return this._size === 0;
-	},
-	each: function (fn) {
-		if (typeof fn === "function")
-			for (var k in this._ctn) if (fn(k, this._ctn[k]) === false) break;
-	},
-	keys: function () {
-		var ks = [];
-		for (var k in this._ctn) ks.push(k);
-		return ks;
-	},
-	values: function () {
-		var vs = [];
-		for (var k in this._ctn) vs.push(this._ctn[k]);
-		return vs;
-	},
+	empty: _m.uber.empty,
+	each: _m.uber.each,
+	keys: _m.uber.keys,
+	values: _m.uber.values,
 	toString: _m.uber.toString
 }
 
@@ -263,9 +271,28 @@ _q.prototype = {
 	}
 }
 
-// Add Class to Window
-window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q;
+// MultiMap Class
+var _mm = function () {
+	_oi.apply(this, arguments);
+}
+extend(_mm, _oi);
+_mm.prototype = {
+	size: _mm.uber.size,
+	clear: _mm.uber.clear,
+	get: _mm.uber.get,
+	containsKey: _mm.uber.containsKey,
+	remove: _mm.uber.remove,
+	empty: _mm.uber.empty,
+	each: _mm.uber.each,
+	keys: _mm.uber.keys,
+	values: _mm.uber.values,
+	toString: _mm.uber.toString
+}
 
+// Add Class to Window
+window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm;
+
+// Class Extend Method
 function extend(Child, Parent) {
 	var O = function () {};
 	O.prototype = Parent.prototype;
