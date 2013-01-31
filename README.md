@@ -33,6 +33,7 @@ List
 
     var l1 = new List();
 	var l2 = new List([1, 2, 3]);
+	var l3 = new List(new List([1, 2, 3]));
 
 Map
 ---
@@ -53,6 +54,10 @@ Map
 * values()
 * toString()
 
+### Create:
+
+    var m = new Map();
+
 Stack
 -----
 ### Methods:
@@ -69,6 +74,12 @@ Stack
 * each(fn) -- fn: function(value) `the Stack will be empty if 'each' method completely executed`
 * toString()
 
+### Create:
+
+    var s1 = new Stack();
+	var s2 = new Stack([1, 2, 3]);
+	var s3 = new Stack(new List([1, 2, 3]));
+
 Queue
 -----
 ### Methods:
@@ -84,6 +95,12 @@ Queue
 * toArray()
 * each(fn) -- fn: function(value) `the Queue will be empty if 'each' method completely executed`
 * toString()
+
+### Create:
+
+    var q1 = new Queue();
+	var q2 = new Queue([1, 2, 3]);
+	var q3 = new Queue(new List([1, 2, 3]));
 
 MultiMap
 --------
@@ -106,3 +123,7 @@ MultiMap
 * keys()
 * values()
 * toString()
+
+### Create:
+
+    var mm = new MultiMap();
