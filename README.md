@@ -2,7 +2,7 @@ Elijah JavaScript Collection Library
 ====================================
 ### Copyright ©2013 Simon P Chang.
 Last Version: 0.7<br>
-Available Collection: [List](#List), [Map](#Map), [Stack](#Stack), [Queue](#Queue), [MultiMap](#MultiMap)
+Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap)<br>
 Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
