@@ -4,7 +4,7 @@
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Fri, Feb 1 2013
+ * Date: Sat, Feb 2 2013
  * 
  **/
 
@@ -49,7 +49,7 @@ _ai.prototype = {
 		return this._ctn.length;
 	},
 	clear: function () {
-		this._ctn = [];
+		delete this._ctn, this._ctn = [];
 	},
 	set: function (v) {
 		v !== undefined && this._ctn.push(v);
@@ -87,7 +87,7 @@ _oi.prototype = {
 		return this._size;
 	},
 	clear: function () {
-		this._ctn = {}, this._size = 0;
+		delete this._ctn, this._ctn = {}, this._size = 0;
 	},
 	get: function (k) {
 		return this._ctn[k];
@@ -99,6 +99,10 @@ _oi.prototype = {
 	},
 	remove: function (k) {
 		k !== undefined && (delete this._ctn[k], this._size--);
+	},
+	removeByValue: function (v) {
+		for (var k in this._ctn)
+			this._ctn[k] === v && this.remove(k);
 	},
 	empty: function () {
 		return this._size === 0;
@@ -202,10 +206,7 @@ _m.prototype = {
 		return false;
 	},
 	remove: _m.uber.remove,
-	removeByValue: function (v) {
-		for (var k in this._ctn)
-			this._ctn[k] === v && this.remove(k); 
-	},
+	removeByValue: _m.uber.removeByValue,
 	empty: _m.uber.empty,
 	each: _m.uber.each,
 	keys: _m.uber.keys,
@@ -282,11 +283,41 @@ _mm.prototype = {
 	get: _mm.uber.get,
 	containsKey: _mm.uber.containsKey,
 	remove: _mm.uber.remove,
+	removeByValue: _mm.uber.removeByValue,
 	empty: _mm.uber.empty,
 	each: _mm.uber.each,
 	keys: _mm.uber.keys,
 	values: _mm.uber.values,
-	toString: _mm.uber.toString
+	toString: _mm.uber.toString,
+	set: function (k, v) {
+		if (k !== undefined && v !== undefined) {
+			this._ctn[k] === undefined && (this._size++, this._ctn[k] = []);
+			this._ctn[k].indexOf(v) === -1 && this._ctn[k].push(v);
+		}
+	},
+	getByValue: function (v) {
+		if (v !== undefined) {
+			var ks = [];
+			for (var k in this._ctn) this._ctn[k].indexOf(v) !== -1 && ks.push(k);
+			return ks;
+		}
+	},
+	getNumberOfValues: function (k) {
+		if (k !== undefined && this._ctn[k]) return this._ctn[k].length;
+	},
+	containsValue: function (v) {
+		for (var k in this._ctn)
+			if (this._ctn[k].indexOf(v) !== -1) return true;
+		return false;
+	},
+	removeByContainsValue: function (v) {
+		for (var k in this._ctn)
+			this._ctn[k].indexOf(v) !== -1 && this.remove(k);
+	},
+	removeValue: function (v) {
+		for (var k in this._ctn)
+			var i = this._ctn[k].indexOf(v) !== -1 && (this._ctn[k].length === 1 ? this.remove(k) : this._ctn[k].splice(i, 1));
+	}
 }
 
 // Add Class to Window

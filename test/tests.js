@@ -162,6 +162,7 @@ module("Map Function Testing", {
 	setup: function() {
 		map = new Map();
 		map.set("0", "123");
+		map.set("1", "456");
 		map.set("1", 456);
 		map.set("2", null);
 		map.set(3, undefined);
@@ -322,4 +323,59 @@ test ("each", function () {
 		ok(v !== undefined);
 	});
 	ok(queue.empty());
+});
+
+
+module("MultiMap Function Testing", {
+	setup: function() {
+		mMap = new MultiMap();
+		mMap.set("1", "123");
+		mMap.set("2", 456);
+		mMap.set("2", 456);
+		mMap.set("2", "123");
+		mMap.set("3", null);
+		mMap.set(4, undefined);
+		mMap.set(undefined, "abc");
+		mMap.set(undefined, undefined);
+		mMap.set();
+	},
+	teardown: function() {
+		delete mMap;
+	}
+});
+test ("getByValue", function () {
+	equal(mMap.getByValue("123").toString(), ["1", "2"].toString());
+	equal(mMap.getByValue(undefined), undefined);
+	equal(mMap.getByValue(), undefined);
+});
+test ("getNumberOfValues", function () {
+	equal(mMap.getNumberOfValues("1"), 1);
+	equal(mMap.getNumberOfValues(2), 2);
+	equal(mMap.getNumberOfValues("5"), undefined);
+	equal(mMap.getNumberOfValues(undefined), undefined);
+	equal(mMap.getNumberOfValues(), undefined);
+});
+test ("containsValue", function () {
+	ok(mMap.containsValue(null));
+	ok(!mMap.containsValue("456"));
+	ok(!mMap.containsValue(undefined));
+	ok(!mMap.containsValue());
+});
+test ("removeByContainsValue", function () {
+	mMap.removeByContainsValue(null);
+	mMap.removeByContainsValue(undefined);
+	mMap.removeByContainsValue();
+	equal(mMap.size(), 2);
+	mMap.removeByContainsValue("123");
+	ok(mMap.empty());
+});
+test ("removeValue", function () {
+	mMap.removeValue("123");
+	mMap.removeValue("456");
+	mMap.removeValue(undefined);
+	mMap.removeValue();
+	equal(mMap.size(), 2);
+	equal(mMap.get("1"), undefined);
+	equal(mMap.getNumberOfValues("2"), 1);
+	equal(mMap.get("3")[0], null);
 });

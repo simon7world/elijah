@@ -127,3 +127,9 @@ MultiMap
 ### Create:
 
     var mm = new MultiMap();
+
+
+Closure Tool
+============
+Tool: [Closure Compiler](https://developers.google.com/closure/compiler/)<br>
+Version: 20121212
