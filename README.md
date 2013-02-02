@@ -2,6 +2,7 @@ Elijah JavaScript Collection Library
 ====================================
 ### Copyright ©2013 Simon P Chang.
 Last Version: 0.7<br>
+Available Collection: [List](#List), [Map](#Map), [Stack](#Stack), [Queue](#Queue), [MultiMap](#MultiMap)
 Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
@@ -32,8 +33,8 @@ List
 ### Create:
 
     var l1 = new List();
-	var l2 = new List([1, 2, 3]);
-	var l3 = new List(new List([1, 2, 3]));
+    var l2 = new List([1, 2, 3]);
+    var l3 = new List(new List([1, 2, 3]));
 
 Map
 ---
@@ -77,8 +78,8 @@ Stack
 ### Create:
 
     var s1 = new Stack();
-	var s2 = new Stack([1, 2, 3]);
-	var s3 = new Stack(new List([1, 2, 3]));
+    var s2 = new Stack([1, 2, 3]);
+    var s3 = new Stack(new List([1, 2, 3]));
 
 Queue
 -----
@@ -99,8 +100,8 @@ Queue
 ### Create:
 
     var q1 = new Queue();
-	var q2 = new Queue([1, 2, 3]);
-	var q3 = new Queue(new List([1, 2, 3]));
+    var q2 = new Queue([1, 2, 3]);
+    var q3 = new Queue(new List([1, 2, 3]));
 
 MultiMap
 --------
