@@ -8,6 +8,10 @@ Email: simon.zsh.peter@gmail.com
 
 List
 ----
+### Introduction:
+
+Represents a list of objects that can be accessed by index.
+
 ### Methods:
 
 * size()
@@ -30,7 +34,7 @@ List
 * each(fn) -- fn: function(index, value)
 * toString()
 
-### Create:
+### Example:
 
     var l1 = new List();
     var l2 = new List([1, 2, 3]);
@@ -38,6 +42,10 @@ List
 
 Map
 ---
+### Introduction:
+
+Represents a collection of keys and values.
+
 ### Methods:
 
 * size()
@@ -55,12 +63,16 @@ Map
 * values()
 * toString()
 
-### Create:
+### Example:
 
     var m = new Map();
 
 Stack
 -----
+### Introduction:
+
+Represents a variable size last-in-first-out (LIFO) collection of objects.
+
 ### Methods:
 
 * size()
@@ -75,7 +87,7 @@ Stack
 * each(fn) -- fn: function(value) `the Stack will be empty if 'each' method completely executed`
 * toString()
 
-### Create:
+### Example:
 
     var s1 = new Stack();
     var s2 = new Stack([1, 2, 3]);
@@ -83,6 +95,10 @@ Stack
 
 Queue
 -----
+### Introduction:
+
+Represents a variable size first-in, first-out (FIFO) collection of objects.
+
 ### Methods:
 
 * size()
@@ -97,7 +113,7 @@ Queue
 * each(fn) -- fn: function(value) `the Queue will be empty if 'each' method completely executed`
 * toString()
 
-### Create:
+### Example:
 
     var q1 = new Queue();
     var q2 = new Queue([1, 2, 3]);
@@ -105,6 +121,10 @@ Queue
 
 MultiMap
 --------
+### Introduction:
+
+Represents a collection similar to a Map, but which may associate multiple values with a single key.
+
 ### Methods:
 
 * size()
@@ -125,7 +145,7 @@ MultiMap
 * values()
 * toString()
 
-### Create:
+### Example:
 
     var mm = new MultiMap();
 
