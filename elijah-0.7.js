@@ -4,7 +4,7 @@
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Sat, Feb 2 2013
+ * Date: Sun, Feb 3 2013
  * 
  **/
 
@@ -71,7 +71,7 @@ _ai.prototype = {
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
-			for (var i in this._ctn) if (fn(i, this._ctn[i]) === false) break;
+			for (var i in this._ctn) if (fn(parseInt(i, 10), this._ctn[i]) === false) break;
 	},
 	toString: _ai.uber.toString
 }
@@ -106,10 +106,6 @@ _oi.prototype = {
 	},
 	empty: function () {
 		return this._size === 0;
-	},
-	each: function (fn) {
-		if (typeof fn === "function")
-			for (var k in this._ctn) if (fn(k, this._ctn[k]) === false) break;
 	},
 	keys: function () {
 		var ks = [];
@@ -174,6 +170,13 @@ _l.prototype = {
 	},
 	toArray: _l.uber.toArray,
 	each: _l.uber.each,
+	filter: function(fn) {
+		if (typeof fn === "function") {
+			var l = new _l();
+			for (var i in this._ctn) fn(parseInt(i, 10), this._ctn[i]) === true && l.set(this._ctn[i]);
+			return l;
+		}
+	},
 	toString: _l.uber.toString
 }
 
@@ -208,7 +211,17 @@ _m.prototype = {
 	remove: _m.uber.remove,
 	removeByValue: _m.uber.removeByValue,
 	empty: _m.uber.empty,
-	each: _m.uber.each,
+	each: function (fn) {
+		if (typeof fn === "function")
+			for (var k in this._ctn) if (fn(k, this._ctn[k]) === false) break;
+	},
+	filter: function(fn) {
+		if (typeof fn === "function") {
+			var m = new _m();
+			for (var k in this._ctn) fn(k, this._ctn[k]) === true && m.set(k, this._ctn[k]);
+			return m;
+		}
+	},
 	keys: _m.uber.keys,
 	values: _m.uber.values,
 	toString: _m.uber.toString
@@ -285,7 +298,6 @@ _mm.prototype = {
 	remove: _mm.uber.remove,
 	removeByValue: _mm.uber.removeByValue,
 	empty: _mm.uber.empty,
-	each: _mm.uber.each,
 	keys: _mm.uber.keys,
 	values: _mm.uber.values,
 	toString: _mm.uber.toString,
@@ -317,6 +329,23 @@ _mm.prototype = {
 	removeValue: function (v) {
 		for (var k in this._ctn)
 			var i = this._ctn[k].indexOf(v) !== -1 && (this._ctn[k].length === 1 ? this.remove(k) : this._ctn[k].splice(i, 1));
+	},
+	each: function (fn) {
+		if (typeof fn === "function")
+			for (var k in this._ctn) {
+				var arr = this._ctn[k];
+				for (var i in arr) if (fn(k, arr[i]) === false) break;
+			}
+	},
+	filter: function(fn) {
+		if (typeof fn === "function") {
+			var mm = new _mm();
+			for (var k in this._ctn) {
+				var arr = this._ctn[k];
+				for (var i in arr) fn(k, arr[i]) === true && mm.set(k, arr[i]);
+			}
+			return mm;
+		}
 	}
 }
 

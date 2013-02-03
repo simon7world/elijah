@@ -33,6 +33,7 @@ Represents a list of objects that can be accessed by index.
 * reverse()
 * toArray()
 * each(fn) -- fn: function(index, value)
+* filter(fn) -- fn: function(index, value) { return Boolean }
 * toString()
 
 ### Example:
@@ -60,6 +61,7 @@ Represents a collection of keys and values.
 * removeByValue(value)
 * empty()
 * each(fn) -- fn: function(key, value)
+* filter(fn) -- fn: function(key, value) { return Boolean }
 * keys()
 * values()
 * toString()
@@ -142,6 +144,7 @@ Represents a collection similar to a Map, but which may associate multiple value
 * removeValue(value) -- remove value not pair
 * empty()
 * each(fn) -- fn: function(key, value)
+* filter(fn) -- fn: function(key, value) { return Boolean }
 * keys()
 * values()
 * toString()

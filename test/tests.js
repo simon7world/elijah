@@ -156,6 +156,11 @@ test ("each", function () {
 		ok(v !== undefined);
 	});
 });
+test ("filter", function () {
+	equal(list.filter(function (i, v){ return i % 2 == 0; }).toString(), new List(["123", null]).toString());
+	equal(list.filter(undefined), undefined);
+	equal(list.filter(), undefined);
+});
 
 
 module("Map Method Testing", {
@@ -239,6 +244,13 @@ test ("each", function () {
 	map.each(function (k, v) {
 		ok(k !== undefined && v !== undefined);
 	});
+});
+test ("filter", function () {
+	var m = new Map();
+	m.set("2", null);
+	equal(map.filter(function (k, v){ return k === "2"; }).toString(), m.toString());
+	equal(map.filter(undefined), undefined);
+	equal(map.filter(), undefined);
 });
 test ("keys", function () {
 	equal(map.keys().toString(), ["0", "1", "2"].toString());
@@ -378,4 +390,17 @@ test ("removeValue", function () {
 	equal(mMap.get("1"), undefined);
 	equal(mMap.getNumberOfValues("2"), 1);
 	equal(mMap.get("3")[0], null);
+});
+test ("each", function () {
+	mMap.each(function (k, v) {
+		ok(k !== undefined && v !== undefined);
+	});
+});
+test ("filter", function () {
+	var mm = new MultiMap();
+	mm.set("2", 456);
+	mm.set("2", "123");
+	equal(mMap.filter(function (k, v){ return k === "2"; }).toString(), mm.toString());
+	equal(mMap.filter(undefined), undefined);
+	equal(mMap.filter(), undefined);
 });
