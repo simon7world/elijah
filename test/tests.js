@@ -13,7 +13,7 @@ test ("String", function () {
 });
 
 
-module("List Function Testing", {
+module("List Method Testing", {
 	setup: function() {
 		list = new List();
 		list.set("123");
@@ -158,7 +158,7 @@ test ("each", function () {
 });
 
 
-module("Map Function Testing", {
+module("Map Method Testing", {
 	setup: function() {
 		map = new Map();
 		map.set("0", "123");
@@ -252,7 +252,7 @@ test ("values", function () {
 });
 
 
-module("Stack Function Testing", {
+module("Stack Method Testing", {
 	setup: function() {
 		stack = new Stack();
 		stack.push("123");
@@ -292,7 +292,7 @@ test ("each", function () {
 });
 
 
-module("Queue Function Testing", {
+module("Queue Method Testing", {
 	setup: function() {
 		queue = new Queue();
 		queue.offer("123");
@@ -326,7 +326,7 @@ test ("each", function () {
 });
 
 
-module("MultiMap Function Testing", {
+module("MultiMap Method Testing", {
 	setup: function() {
 		mMap = new MultiMap();
 		mMap.set("1", "123");

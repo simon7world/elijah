@@ -150,6 +150,12 @@ Represents a collection similar to a Map, but which may associate multiple value
     var mm = new MultiMap();
 
 
+UnitTest Framework
+==================
+Framework: [QUnit](http://qunitjs.com/)<br>
+Version: 1.11.0
+
+
 Closure Tool
 ============
 Tool: [Closure Compiler](https://developers.google.com/closure/compiler/)<br>
