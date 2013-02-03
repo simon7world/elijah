@@ -1,7 +1,7 @@
 <img alt="elijah_logo" src="http://qpic.cn/mznGWmyoa">
 
-Elijah JavaScript Collection Library
-====================================
+JavaScript Collection Library
+=============================
 ### Copyright ©2013 Simon P Chang.
 Last Version: 0.7<br>
 Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap)<br>
