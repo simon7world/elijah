@@ -102,6 +102,9 @@ test ("removeAt", function () {
 	equal(list.get(0), 456);
 });
 test ("removeRange", function () {
+	list.removeRange(undefined);
+	list.removeRange(undefined, undefined);
+	list.removeRange();
 	list.removeRange(-1, 2);
 	list.removeRange(1, 1);
 	equal(list.size(), 3);
@@ -142,6 +145,15 @@ test ("reverse", function () {
 	list.reverse();
 	equal(list.get(0), null);
 	equal(list.get(2), "123");
+});
+test ("sub", function () {
+	equal(list.sub(undefined, undefined), undefined);
+	equal(list.sub(undefined), undefined);
+	equal(list.sub(), undefined);
+	equal(list.sub(-1, 2), undefined);
+	equal(list.sub(2, 100), undefined);
+	equal(list.sub(1, 1).toString(), (new List()).toString());
+	equal(list.sub(1, 3).toString(), (new List([456, null])).toString())
 });
 test ("toArray", function () {
 	var arr = list.toArray();

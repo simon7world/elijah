@@ -33,6 +33,7 @@ Represents a list of objects that can be accessed by index.
 * removeLast(value)
 * removeAll(value)
 * reverse()
+* sub(from, to) -- from >= index < to
 * toArray()
 * each(fn) -- fn: function(index, value)
 * filter(fn) -- fn: function(index, value) { return Boolean }

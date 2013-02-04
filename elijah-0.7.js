@@ -4,7 +4,7 @@
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Sun, Feb 3 2013
+ * Date: Mon, Feb 4, 2013
  * 
  **/
 
@@ -167,6 +167,13 @@ _l.prototype = {
 	},
 	reverse: function () {
 		this._ctn.reverse();
+	},
+	sub: function (fi, ti) {
+		if (fi >= 0 && ti <= this.size()) {
+			var l = new List();
+			while (fi < ti) l.set(this._ctn[fi++]);
+			return l;
+		}
 	},
 	toArray: _l.uber.toArray,
 	each: _l.uber.each,
