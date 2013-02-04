@@ -5,7 +5,7 @@ JavaScript Collection Library
 ### Copyright ©2013 Simon P Chang.
 Last Version: 0.7<br>
 Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap)<br>
-Scheduled Collection: (v0.8)[TreeList](#treelist), (v0.9)[TreeMap](#treemap)<br>
+Scheduled Collection: (v0.8)[TreeMap](#treemap)<br>
 Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
@@ -154,6 +154,34 @@ Represents a collection similar to a Map, but which may associate multiple value
 ### Example:
 
     var mm = new MultiMap();
+
+TreeMap
+-------
+### Introduction:
+
+Represents a map is sorted according to the natural ordering of its keys.
+
+### Methods:
+
+* size()
+* clear()
+* set(key, value) -- key: not undefined, value: not undefined
+* get(key) -- get value by key
+* getByValue(value) -- get key by value
+* containsKey(key)
+* containsValue(value)
+* remove(key) -- remove by key
+* removeByValue(value)
+* empty()
+* each(fn) -- fn: function(key, value)
+* filter(fn) -- fn: function(key, value) { return Boolean }
+* keys()
+* values()
+* toString()
+
+### Example:
+
+    var tm = new TreeMap();
 
 
 UnitTest Framework
