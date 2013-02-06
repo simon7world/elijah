@@ -63,6 +63,32 @@ test ("setRange", function () {
 	equal(list.get(5), "3");
 	equal(list.get(6), undefined);
 });
+test ("insert", function () {
+	list.insert(undefined, undefined);
+	list.insert();
+	list.insert(-1, 2);
+	list.insert(100, 2);
+	list.insert(1, undefined);
+	list.insert(1, 444);
+	list.insert(list.size(), 777);
+	equal(list.get(1), 444);
+	equal(list.get(list.size() - 1), 777);
+	equal(list.size(), 5);
+});
+test ("insertRange", function () {
+	list.insertRange(undefined, undefined);
+	list.insertRange();
+	list.insertRange(-1, [2]);
+	list.insertRange(100, [2]);
+	list.insertRange(1, undefined);
+	list.insertRange(1, [444, 444]);
+	list.insertRange(list.size(), [777, 777]);
+	equal(list.get(1), 444);
+	equal(list.get(2), 444);
+	equal(list.get(list.size() - 1), 777);
+	equal(list.get(list.size() - 2), 777);
+	equal(list.size(), 7);
+});
 test ("contains", function () {
 	ok(list.contains(456));
 	ok(!list.contains("456"));

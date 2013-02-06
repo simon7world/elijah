@@ -4,7 +4,7 @@
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Feb, Feb 6, 2013
+ * Date: Wed, Feb 6, 2013
  * 
  **/
 
@@ -134,6 +134,15 @@ _l.prototype = {
 		return this._ctn[i];
 	},
 	setRange: _l.uber.setRange,
+	insert: function (i, v) {
+		i >= 0 && i <= this.size() && v !== undefined && this._ctn.splice(i, 0, v);
+	},
+	insertRange: function (i, vs) {
+		var arr;
+		if (vs instanceof Array && vs.length) arr = vs;
+		else if (vs instanceof List && vs.size && vs.size()) arr = vs._ctn;
+		if (arr) for (var j = arr.length; j--;) this.insert(i, arr[j]);
+	},
 	contains: _l.uber.contains,
 	indexOf: function (v) {
 		return this._ctn.indexOf(v);

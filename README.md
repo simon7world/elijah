@@ -22,6 +22,8 @@ Represents a list of objects that can be accessed by index.
 * set(value) -- value: not undefined
 * get(index)
 * setRange(values) -- values: Array or List
+* insert(index, value)
+* insertRange(index, values) -- values: Array or List
 * contains(value)
 * indexOf(value) -- first index
 * lastIndexOf(value)
