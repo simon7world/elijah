@@ -1,10 +1,10 @@
 /**
- * Elijah JavaScript Collection Library v0.7
+ * Elijah JavaScript Collection Library v0.8
  * Copyright 2013 Simon P Chang.
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Mon, Feb 4, 2013
+ * Date: Feb, Feb 6, 2013
  * 
  **/
 
@@ -356,8 +356,40 @@ _mm.prototype = {
 	}
 }
 
+// TreeMap Class
+var _tm = function () {
+	_m.apply(this, arguments);
+}
+extend(_tm, _m);
+_tm.prototype = {
+	size: _tm.uber.size,
+	clear: _tm.uber.clear,
+	get: _tm.uber.get,
+	getByValue: _tm.uber.getByValue,
+	containsKey: _tm.uber.containsKey,
+	containsValue: _tm.uber.containsValue,
+	remove: _tm.uber.remove,
+	removeByValue: _tm.uber.removeByValue,
+	empty: _tm.uber.empty,
+	each: _tm.uber.each,
+	filter: _tm.uber.each,
+	keys: _tm.uber.keys,
+	values: _tm.uber.values,
+	toString: _tm.uber.toString,
+	set: function (k, v) {
+		if (k !== undefined && v !== undefined) {
+			if (this._ctn[k] !== undefined || this.size() === 0) this._ctn[k] = v, this.size() === 0 && this._size++;
+			else {
+				var o = {};
+				for (var ck in this._ctn) ck > k && (o[k] = v), o[ck] = this._ctn[ck];
+				delete this._ctn, this._ctn = o, this._size++;
+			}
+		}
+	}
+}
+
 // Add Class to Window
-window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm;
+window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm, window.TreeMap = _tm;
 
 // Class Extend Method
 function extend(Child, Parent) {

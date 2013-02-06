@@ -416,3 +416,35 @@ test ("filter", function () {
 	equal(mMap.filter(undefined), undefined);
 	equal(mMap.filter(), undefined);
 });
+
+
+module("TreeMap Method Testing", {
+	setup: function() {
+		tMap = new TreeMap();
+		tMap.set("b", null);
+		tMap.set("2", null);
+		tMap.set(1, null);
+		tMap.set("a", null);
+		tMap.set("0", "0");
+		tMap.set("_", null);
+		tMap.set(0, 0);
+		tMap.set(4, undefined);
+		tMap.set(undefined, "abc");
+		tMap.set(undefined, undefined);
+		tMap.set();
+	},
+	teardown: function() {
+		delete tMap;
+	}
+});
+test ("size", function () {
+	equal(tMap.size(), 6);
+});
+test ("get", function () {
+	equal(tMap.get("0"), 0);
+});
+test ("keys", function () {
+	equal(tMap.keys().toString(), ["0", "1", "2", "_", "a", "b"].toString());
+	tMap.clear();
+	equal(tMap.keys().toString(), [].toString());
+});
