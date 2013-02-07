@@ -59,7 +59,7 @@ Represents a collection of keys and values.
 * clear()
 * set(key, value) -- key: not undefined, value: not undefined
 * get(key) -- get value by key
-* getByValue(value) -- get key by value
+* getByValue(value) -- get keys by value
 * containsKey(key)
 * containsValue(value)
 * remove(key) -- remove by key
@@ -139,7 +139,7 @@ Represents a collection similar to a Map, but which may associate multiple value
 * clear()
 * set(key, value) -- key: not undefined, value: not undefined
 * get(key) -- get value by key
-* getByValue(value) -- get key by value
+* getByValue(value) -- get keys by value
 * getNumberOfValues(key)
 * containsKey(key)
 * containsValue(value)
@@ -170,7 +170,7 @@ Represents a map is sorted according to the natural ordering of its keys.
 * clear()
 * set(key, value) -- key: not undefined, value: not undefined
 * get(key) -- get value by key
-* getByValue(value) -- get key by value
+* getByValue(value) -- get keys by value
 * containsKey(key)
 * containsValue(value)
 * remove(key) -- remove by key
