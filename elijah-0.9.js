@@ -1,10 +1,10 @@
 /**
- * Elijah JavaScript Collection Library v0.8
+ * Elijah JavaScript Collection Library v0.9
  * Copyright 2013 Simon P Chang.
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Wed, Feb 6, 2013
+ * Date: Mon, Feb 11, 2013
  * 
  **/
 
@@ -73,7 +73,7 @@ _ai.prototype = {
 		if (typeof fn === "function")
 			for (var i in this._ctn) if (fn(parseInt(i, 10), this._ctn[i]) === false) break;
 	},
-	toString: _ai.uber.toString
+	toString: _ai.b.toString
 }
 
 // The {} Implementation Class's Parent
@@ -117,7 +117,7 @@ _oi.prototype = {
 		for (var k in this._ctn) vs.push(this._ctn[k]);
 		return vs;
 	},
-	toString: _oi.uber.toString
+	toString: _oi.b.toString
 }
 
 // List Class
@@ -127,13 +127,13 @@ var _l = function (vs) {
 }
 extend(_l, _ai);
 _l.prototype = {
-	size: _l.uber.size,
-	clear: _l.uber.clear,
-	set: _l.uber.set,
+	size: _l.b.size,
+	clear: _l.b.clear,
+	set: _l.b.set,
 	get: function (i) {
 		return this._ctn[i];
 	},
-	setRange: _l.uber.setRange,
+	setRange: _l.b.setRange,
 	insert: function (i, v) {
 		i >= 0 && i <= this.size() && v !== undefined && this._ctn.splice(i, 0, v);
 	},
@@ -143,7 +143,7 @@ _l.prototype = {
 		else if (vs instanceof List && vs.size && vs.size()) arr = vs._ctn;
 		if (arr) for (var j = arr.length; j--;) this.insert(i, arr[j]);
 	},
-	contains: _l.uber.contains,
+	contains: _l.b.contains,
 	indexOf: function (v) {
 		return this._ctn.indexOf(v);
 	},
@@ -156,7 +156,7 @@ _l.prototype = {
 			this._ctn[i] === v && inds.push(parseInt(i, 10));
 		return inds;
 	},
-	empty: _l.uber.empty,
+	empty: _l.b.empty,
 	removeAt: function (i) {
 		i >= 0 && i < this.size() && this._ctn.splice(i, 1);
 	},
@@ -184,8 +184,8 @@ _l.prototype = {
 			return l;
 		}
 	},
-	toArray: _l.uber.toArray,
-	each: _l.uber.each,
+	toArray: _l.b.toArray,
+	each: _l.b.each,
 	filter: function(fn) {
 		if (typeof fn === "function") {
 			var l = new _l();
@@ -193,7 +193,7 @@ _l.prototype = {
 			return l;
 		}
 	},
-	toString: _l.uber.toString
+	toString: _l.b.toString
 }
 
 // Map Class
@@ -202,15 +202,15 @@ var _m = function () {
 }
 extend(_m, _oi);
 _m.prototype = {
-	size: _m.uber.size,
-	clear: _m.uber.clear,
+	size: _m.b.size,
+	clear: _m.b.clear,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
 			this._ctn[k] === undefined && this._size++;
 			this._ctn[k] = v;
 		}
 	},
-	get: _m.uber.get,
+	get: _m.b.get,
 	getByValue: function (v) {
 		if (v !== undefined) {
 			var ks = [];
@@ -218,15 +218,15 @@ _m.prototype = {
 			return ks;
 		}
 	},
-	containsKey: _m.uber.containsKey,
+	containsKey: _m.b.containsKey,
 	containsValue: function (v) {
 		for (var k in this._ctn)
 			if (this._ctn[k] === v) return true;
 		return false;
 	},
-	remove: _m.uber.remove,
-	removeByValue: _m.uber.removeByValue,
-	empty: _m.uber.empty,
+	remove: _m.b.remove,
+	removeByValue: _m.b.removeByValue,
+	empty: _m.b.empty,
 	each: function (fn) {
 		if (typeof fn === "function")
 			for (var k in this._ctn) if (fn(k, this._ctn[k]) === false) break;
@@ -238,9 +238,9 @@ _m.prototype = {
 			return m;
 		}
 	},
-	keys: _m.uber.keys,
-	values: _m.uber.values,
-	toString: _m.uber.toString
+	keys: _m.b.keys,
+	values: _m.b.values,
+	toString: _m.b.toString
 }
 
 // Stack Class
@@ -250,13 +250,13 @@ var _s = function (vs) {
 }
 extend(_s, _ai);
 _s.prototype = {
-	size: _s.uber.size,
-	clear: _s.uber.clear,
-	push: _s.uber.set,
-	pushRange: _s.uber.setRange,
-	contains: _s.uber.contains,
-	empty: _s.uber.empty,
-	toString: _s.uber.toString,
+	size: _s.b.size,
+	clear: _s.b.clear,
+	push: _s.b.set,
+	pushRange: _s.b.setRange,
+	contains: _s.b.contains,
+	empty: _s.b.empty,
+	toString: _s.b.toString,
 	pop: function () {
 		return this._ctn.pop();
 	},
@@ -281,14 +281,14 @@ var _q = function (vs) {
 }
 extend(_q, _ai);
 _q.prototype = {
-	size: _q.uber.size,
-	clear: _q.uber.clear,
-	offer: _q.uber.set,
-	offerRange: _q.uber.setRange,
-	contains: _q.uber.contains,
-	empty: _q.uber.empty,
-	toArray: _q.uber.toArray,
-	toString: _q.uber.toString,
+	size: _q.b.size,
+	clear: _q.b.clear,
+	offer: _q.b.set,
+	offerRange: _q.b.setRange,
+	contains: _q.b.contains,
+	empty: _q.b.empty,
+	toArray: _q.b.toArray,
+	toString: _q.b.toString,
 	poll: function () {
 		return this._ctn.shift();
 	},
@@ -307,16 +307,16 @@ var _mm = function () {
 }
 extend(_mm, _oi);
 _mm.prototype = {
-	size: _mm.uber.size,
-	clear: _mm.uber.clear,
-	get: _mm.uber.get,
-	containsKey: _mm.uber.containsKey,
-	remove: _mm.uber.remove,
-	removeByValue: _mm.uber.removeByValue,
-	empty: _mm.uber.empty,
-	keys: _mm.uber.keys,
-	values: _mm.uber.values,
-	toString: _mm.uber.toString,
+	size: _mm.b.size,
+	clear: _mm.b.clear,
+	get: _mm.b.get,
+	containsKey: _mm.b.containsKey,
+	remove: _mm.b.remove,
+	removeByValue: _mm.b.removeByValue,
+	empty: _mm.b.empty,
+	keys: _mm.b.keys,
+	values: _mm.b.values,
+	toString: _mm.b.toString,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
 			this._ctn[k] === undefined && (this._size++, this._ctn[k] = []);
@@ -371,20 +371,20 @@ var _tm = function () {
 }
 extend(_tm, _m);
 _tm.prototype = {
-	size: _tm.uber.size,
-	clear: _tm.uber.clear,
-	get: _tm.uber.get,
-	getByValue: _tm.uber.getByValue,
-	containsKey: _tm.uber.containsKey,
-	containsValue: _tm.uber.containsValue,
-	remove: _tm.uber.remove,
-	removeByValue: _tm.uber.removeByValue,
-	empty: _tm.uber.empty,
-	each: _tm.uber.each,
-	filter: _tm.uber.each,
-	keys: _tm.uber.keys,
-	values: _tm.uber.values,
-	toString: _tm.uber.toString,
+	size: _tm.b.size,
+	clear: _tm.b.clear,
+	get: _tm.b.get,
+	getByValue: _tm.b.getByValue,
+	containsKey: _tm.b.containsKey,
+	containsValue: _tm.b.containsValue,
+	remove: _tm.b.remove,
+	removeByValue: _tm.b.removeByValue,
+	empty: _tm.b.empty,
+	each: _tm.b.each,
+	filter: _tm.b.each,
+	keys: _tm.b.keys,
+	values: _tm.b.values,
+	toString: _tm.b.toString,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
 			if (this._ctn[k] !== undefined || this.size() === 0) this._ctn[k] = v, this.size() === 0 && this._size++;
@@ -397,8 +397,55 @@ _tm.prototype = {
 	}
 }
 
+// TreeSet Class
+var _ts = function (vs) {
+	_l.apply(this, arguments);
+	this.setRange(vs);
+}
+extend(_ts, _l);
+_ts.prototype = {
+	size: _ts.b.size,
+	clear: _ts.b.clear,
+	contains: _ts.b.contains,
+	empty: _ts.b.empty,
+	remove: _ts.b.remove,
+	toArray: _ts.b.toArray,
+	toString: _ts.b.toString,
+	set: function (v) {
+		if (v !== undefined && !this.contains(v)) {
+			var s = this.size();
+			if (s === 0 || rep(this._ctn[s - 1]) < rep(v)) this._ctn.push(v);
+			else for (var i in this._ctn)
+				if (rep(this._ctn[i]) > rep(v)) {
+					this._ctn.splice(i, 0, v); break;
+				}
+		}
+		
+		function rep(s) {
+			return s === null ? "null" : s.toString().replace(/^'|'$/, "");
+		}
+	},
+	setRange: function (vs) {
+		var arr = [];
+		if (vs instanceof Array && vs.length) arr = vs;
+		else if (vs instanceof List && vs.size && vs.size()) arr = vs._ctn;
+		for (var i in arr) this.set(arr[i]);
+	},
+	each: function (fn) {
+		if (typeof fn === "function")
+			for (var i in this._ctn) if (fn(this._ctn[i]) === false) break;
+	},
+	filter: function (fn) {
+		if (typeof fn === "function") {
+			var ts = new _ts();
+			for (var i in this._ctn) fn(this._ctn[i]) === true && ts.set(this._ctn[i]);
+			return ts;
+		}
+	}
+}
+
 // Add Class to Window
-window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm, window.TreeMap = _tm;
+window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm, window.TreeMap = _tm, window.TreeSet = _ts;
 
 // Class Extend Method
 function extend(Child, Parent) {
@@ -406,7 +453,7 @@ function extend(Child, Parent) {
 	O.prototype = Parent.prototype;
 	Child.prototype = new O();
 	Child.prototype.constructor = Child;
-	Child.uber = Parent.prototype;
+	Child.b = Parent.prototype;
 }
 
 }());

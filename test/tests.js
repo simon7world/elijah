@@ -474,3 +474,43 @@ test ("keys", function () {
 	tMap.clear();
 	equal(tMap.keys().toString(), [].toString());
 });
+
+
+module("TreeSet Method Testing", {
+	setup: function() {
+		tSet = new TreeSet();
+		tSet.set("b");
+		tSet.set(0);
+		tSet.set("1");
+		tSet.set("_");
+		tSet.set(null);
+		tSet.set(1);
+		tSet.set("b");
+		tSet.set(null);
+		tSet.set(0);
+		tSet.set(undefined);
+		tSet.set();
+	},
+	teardown: function() {
+		delete tSet;
+	}
+});
+test ("size", function () {
+	equal(tSet.size(), 6);
+});
+test ("setRange", function () {
+	tSet.setRange(["b", 1, "a"]);
+	equal(tSet.size(), 7);
+	tSet.setRange(new List(["c", null, 2]));
+	equal(tSet.size(), 9);
+});
+test ("each", function () {
+	tSet.each(function (v) {
+		ok(v !== undefined);
+	});
+});
+test ("filter", function () {
+	equal(tSet.filter(function (v){ return true; }).toString(), new TreeSet([0, 1, "1", "_", "b", null]).toString());
+	equal(tSet.filter(undefined), undefined);
+	equal(tSet.filter(), undefined);
+});

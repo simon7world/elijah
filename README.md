@@ -3,9 +3,9 @@
 JavaScript Collection Library
 =============================
 ### Copyright ©2013 Simon P Chang.
-Last Version: 0.8<br>
-Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap), [TreeMap](#treemap)<br>
-Scheduled Collection: (v0.9)[TreeSet](#treeset)<br>
+Last Version: 0.9<br>
+Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap), [TreeMap](#treemap), [TreeSet](#treeset)<br>
+Scheduled Collection: (v1.0)[BiMap](#bimap)<br>
 Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
@@ -30,12 +30,12 @@ Represents a list of objects that can be accessed by index.
 * indicesOf(value)
 * empty()
 * removeAt(index)
-* removeRange(from, to) -- from >= index < to
+* removeRange(from, to) -- from <= index < to
 * remove(value) -- remove first element
 * removeLast(value)
 * removeAll(value)
 * reverse()
-* sub(from, to) -- from >= index < to
+* sub(from, to) -- from <= index < to
 * toArray()
 * each(fn) -- fn: function(index, value)
 * filter(fn) -- fn: function(index, value) { return Boolean }
@@ -185,6 +185,32 @@ Represents a map is sorted according to the natural ordering of its keys.
 ### Example:
 
     var tm = new TreeMap();
+
+TreeSet
+-------
+### Introduction:
+
+Represents a set is sorted according to the natural ordering of its elements.
+
+### Methods:
+
+* size()
+* clear()
+* set(value) -- value: not undefined
+* setRange(values) -- values: Array or List
+* contains(value)
+* empty()
+* remove(value)
+* toArray()
+* each(fn) -- fn: function(value)
+* filter(fn) -- fn: function(value) { return Boolean }
+* toString()
+
+### Example:
+
+    var ts1 = new TreeSet();
+	var ts2 = new TreeSet([1, 2, 3]);
+	var ts3 = new TreeSet(new List([1, 2, 3]));
 
 
 UnitTest Framework
