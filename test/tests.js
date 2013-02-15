@@ -510,7 +510,7 @@ test ("each", function () {
 	});
 });
 test ("filter", function () {
-	equal(tSet.filter(function (v){ return true; }).toString(), new TreeSet([0, 1, "1", "_", "b", null]).toString());
+	equal(tSet.filter(function (v){ return true; }).toString(), new TreeSet([0, "1", "_", "b", null]).toString());
 	equal(tSet.filter(undefined), undefined);
 	equal(tSet.filter(), undefined);
 });

@@ -422,7 +422,7 @@ _ts.prototype = {
 		}
 		
 		function rep(s) {
-			return s === null ? "null" : s.toString().replace(/^'|'$/, "");
+			return s === null ? "null" : s.toString().replace(/^'/, "").replace(/'$/, "");
 		}
 	},
 	setRange: function (vs) {
