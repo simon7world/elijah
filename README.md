@@ -3,9 +3,9 @@
 JavaScript Collection Library
 =============================
 ### Copyright ©2013 Simon P Chang.
-Last Version: 0.9<br>
-Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap), [TreeMap](#treemap), [TreeSet](#treeset)<br>
-Scheduled Collection: (v1.0)[BiMap](#bimap)<br>
+Last Version: 1.0<br>
+Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap), [TreeMap](#treemap), [TreeSet](#treeset), [BiMap](#bimap)<br>
+Scheduled Collection: None<br>
 Author: Simon P Chang<br>
 Email: simon.zsh.peter@gmail.com
 
@@ -209,8 +209,37 @@ Represents a set is sorted according to the natural ordering of its elements.
 ### Example:
 
     var ts1 = new TreeSet();
-	var ts2 = new TreeSet([1, 2, 3]);
-	var ts3 = new TreeSet(new List([1, 2, 3]));
+    var ts2 = new TreeSet([1, 2, 3]);
+    var ts3 = new TreeSet(new List([1, 2, 3]));
+
+BiMap
+-----
+### Introduction:
+
+Represents a map that preserves the uniqueness of its values as well as that of its keys.
+BiMap is abbreviation of "Bidirectional Map".
+
+### Methods:
+
+* size()
+* clear()
+* set(key, value) -- key: not undefined, value: not undefined
+* get(key) -- get value by key
+* getByValue(value) -- get key by value
+* containsKey(key)
+* containsValue(value)
+* remove(key) -- remove by key
+* removeByValue(value)
+* empty()
+* each(fn) -- fn: function(key, value)
+* filter(fn) -- fn: function(key, value) { return Boolean }
+* keys()
+* values()
+* toString()
+
+### Example:
+
+    var bm = new BiMap();
 
 
 UnitTest Framework

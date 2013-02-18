@@ -1,10 +1,10 @@
 /**
- * Elijah JavaScript Collection Library v0.9
+ * Elijah JavaScript Collection Library v1.0
  * Copyright 2013 Simon P Chang.
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Mon, Feb 11, 2013
+ * Date: Mon, Feb 18, 2013
  * 
  **/
 
@@ -206,7 +206,7 @@ _m.prototype = {
 	clear: _m.b.clear,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
-			this._ctn[k] === undefined && this._size++;
+			this.containsKey(k) || this._size++;
 			this._ctn[k] = v;
 		}
 	},
@@ -444,8 +444,39 @@ _ts.prototype = {
 	}
 }
 
+// BiMap Class
+var _bm = function () {
+	_m.apply(this, arguments);
+}
+extend(_bm, _m);
+_bm.prototype = {
+	size: _bm.b.size,
+	clear: _bm.b.clear,
+	get: _bm.b.get,
+	containsKey: _bm.b.containsKey,
+	containsValue: _bm.b.containsValue,
+	remove: _bm.b.remove,
+	removeByValue: _bm.b.removeByValue,
+	empty: _bm.b.empty,
+	each: _bm.b.each,
+	filter: _bm.b.filter,
+	keys: _bm.b.keys,
+	values: _bm.b.values,
+	toString: _bm.b.toString,
+	set: function (k, v) {
+		k === undefined || v === undefined || this.containsKey(k) || this.containsValue(v) || (this._ctn[k] = v, this._size++);
+	},
+	getByValue: function (v) {
+		if (v !== undefined) {
+			var f;
+			for (var k in this._ctn) this._ctn[k] === v && (f = k);
+			return f;
+		}
+	}
+}
+
 // Add Class to Window
-window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm, window.TreeMap = _tm, window.TreeSet = _ts;
+window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm, window.TreeMap = _tm, window.TreeSet = _ts, window.BiMap = _bm;
 
 // Class Extend Method
 function extend(Child, Parent) {

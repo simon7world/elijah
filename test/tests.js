@@ -514,3 +514,31 @@ test ("filter", function () {
 	equal(tSet.filter(undefined), undefined);
 	equal(tSet.filter(), undefined);
 });
+
+
+module("BiMap Method Testing", {
+	setup: function() {
+		bMap = new BiMap();
+		bMap.set("0", 0);
+		bMap.set("1", "1");
+		bMap.set("0", 2);
+		bMap.set("", "");
+		bMap.set(null, "");
+		bMap.set(undefined);
+		bMap.set(undefined, undefined);
+		bMap.set();
+	},
+	teardown: function() {
+		delete bMap;
+	}
+});
+test ("size", function () {
+	equal(bMap.size(), 3);
+});
+test ("getByValue", function () {
+	equal(bMap.getByValue("1"), "1");
+	equal(bMap.getByValue(0), "0");
+	equal(bMap.getByValue(1000), undefined);
+	equal(bMap.getByValue(undefined), undefined);
+	equal(bMap.getByValue(), undefined);
+});
