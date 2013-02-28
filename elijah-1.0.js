@@ -4,7 +4,7 @@
  * 
  * Author: Simon P Chang
  * Email: simon.zsh.peter@gmail.com
- * Date: Mon, Feb 18, 2013
+ * Date: Thu, Feb 28, 2013
  * 
  **/
 
@@ -12,30 +12,30 @@
 
 // Override toString Method
 Object.prototype.toString = function () {
-	var arr = [];
-	for (var k in this) arr.push(k + ":" + (this[k] === null ? "null" : this[k].toString()));
+	var arr = [], m = this;
+	for (var k in m) arr.push(k + ":" + (m[k] === null ? "null" : m[k].toString()));
 	return "{" + arr.join(",") + "}";
 }
 Array.prototype.toString = function () {
-	var arr = [];
-	for (var i in this) arr.push(this[i] === null ? "null" : this[i].toString());
+	var arr = [], m = this;
+	for (var i in m) arr.push(m[i] === null ? "null" : m[i].toString());
 	return "[" + arr.join(",") + "]";
 }
 Date.prototype.toString = function () {
-	return this.getMonth() + 1 + "/" + this.getDate() + "/" + this.getFullYear() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds() + "." + this.getMilliseconds();
+	var m = this;
+	return m.getMonth() + 1 + "/" + m.getDate() + "/" + m.getFullYear() + " " + m.getHours() + ":" + m.getMinutes() + ":" + m.getSeconds() + "." + m.getMilliseconds();
 }
 String.prototype.toString = function () {
 	return "'" + this + "'";
 }
 
+// Override undefined
+var undefined;
+
 // Elijah Class
-var _elj = function () {
-	this._ctn;
-}
-_elj.prototype = {
-	toString: function () {
-		return this._ctn.toString();
-	}
+var _elj = function () {}
+_elj.prototype.toString = function () {
+	return this._ctn.toString();
 }
 
 // The [] Implementation Class's Parent
@@ -55,8 +55,9 @@ _ai.prototype = {
 		v !== undefined && this._ctn.push(v);
 	},
 	setRange: function (vs) {
-		if (vs instanceof Array && vs.length) this._ctn = this._ctn.concat(vs);
-		else if (vs instanceof List && vs.size && vs.size()) this._ctn = this._ctn.concat(vs._ctn);
+		var m = this;
+		if (vs instanceof Array && vs.length) m._ctn = m._ctn.concat(vs);
+		else if (vs instanceof List && vs.size && vs.size()) m._ctn = m._ctn.concat(vs._ctn);
 	},
 	contains: function (v) {
 		return this._ctn.indexOf(v) !== -1;
@@ -170,9 +171,10 @@ _l.prototype = {
 		this.removeAt(this.lastIndexOf(v));
 	},
 	removeAll: function (v) {
-		if (v === undefined) this.clear();
-		else for (var i = this.size(); i--;)
-			this._ctn[i] === v && this.removeAt(i);
+		var m = this;
+		if (v === undefined) m.clear();
+		else for (var i = m.size(); i--;)
+			m._ctn[i] === v && m.removeAt(i);
 	},
 	reverse: function () {
 		this._ctn.reverse();
@@ -319,8 +321,9 @@ _mm.prototype = {
 	toString: _mm.b.toString,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
-			this._ctn[k] === undefined && (this._size++, this._ctn[k] = []);
-			this._ctn[k].indexOf(v) === -1 && this._ctn[k].push(v);
+			var m = this;
+			m._ctn[k] === undefined && (m._size++, m._ctn[k] = []);
+			m._ctn[k].indexOf(v) === -1 && m._ctn[k].push(v);
 		}
 	},
 	getByValue: function (v) {
@@ -343,8 +346,9 @@ _mm.prototype = {
 			this._ctn[k].indexOf(v) !== -1 && this.remove(k);
 	},
 	removeValue: function (v) {
-		for (var k in this._ctn)
-			var i = this._ctn[k].indexOf(v) !== -1 && (this._ctn[k].length === 1 ? this.remove(k) : this._ctn[k].splice(i, 1));
+		var m = this;
+		for (var k in m._ctn)
+			var i = m._ctn[k].indexOf(v) !== -1 && (m._ctn[k].length === 1 ? m.remove(k) : m._ctn[k].splice(i, 1));
 	},
 	each: function (fn) {
 		if (typeof fn === "function")
@@ -387,11 +391,12 @@ _tm.prototype = {
 	toString: _tm.b.toString,
 	set: function (k, v) {
 		if (k !== undefined && v !== undefined) {
-			if (this._ctn[k] !== undefined || this.size() === 0) this._ctn[k] = v, this.size() === 0 && this._size++;
+			var m = this;
+			if (m._ctn[k] !== undefined || m.size() === 0) m._ctn[k] = v, m.size() === 0 && m._size++;
 			else {
 				var o = {};
-				for (var ck in this._ctn) ck > k && (o[k] = v), o[ck] = this._ctn[ck];
-				delete this._ctn, this._ctn = o, this._size++;
+				for (var ck in m._ctn) ck > k && (o[k] = v), o[ck] = m._ctn[ck];
+				delete m._ctn, m._ctn = o, m._size++;
 			}
 		}
 	}
@@ -413,11 +418,11 @@ _ts.prototype = {
 	toString: _ts.b.toString,
 	set: function (v) {
 		if (v !== undefined && !this.contains(v)) {
-			var s = this.size();
-			if (s === 0 || rep(this._ctn[s - 1]) < rep(v)) this._ctn.push(v);
-			else for (var i in this._ctn)
-				if (rep(this._ctn[i]) > rep(v)) {
-					this._ctn.splice(i, 0, v); break;
+			var m = this, s = m.size();
+			if (s === 0 || rep(m._ctn[s - 1]) < rep(v)) m._ctn.push(v);
+			else for (var i in m._ctn)
+				if (rep(m._ctn[i]) > rep(v)) {
+					m._ctn.splice(i, 0, v); break;
 				}
 		}
 		
@@ -464,7 +469,8 @@ _bm.prototype = {
 	values: _bm.b.values,
 	toString: _bm.b.toString,
 	set: function (k, v) {
-		k === undefined || v === undefined || this.containsKey(k) || this.containsValue(v) || (this._ctn[k] = v, this._size++);
+		var m = this;
+		k === undefined || v === undefined || m.containsKey(k) || m.containsValue(v) || (m._ctn[k] = v, m._size++);
 	},
 	getByValue: function (v) {
 		if (v !== undefined) {
@@ -479,12 +485,12 @@ _bm.prototype = {
 window.List = _l, window.Map = _m, window.Stack = _s, window.Queue = _q, window.MultiMap = _mm, window.TreeMap = _tm, window.TreeSet = _ts, window.BiMap = _bm;
 
 // Class Extend Method
-function extend(Child, Parent) {
-	var O = function () {};
-	O.prototype = Parent.prototype;
-	Child.prototype = new O();
-	Child.prototype.constructor = Child;
-	Child.b = Parent.prototype;
+function extend(C, P) {
+	var T = function () {};
+	T.prototype = P.prototype;
+	C.prototype = new T();
+	C.prototype.constructor = C;
+	C.b = P.prototype;
 }
 
 }());
