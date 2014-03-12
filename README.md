@@ -2,7 +2,7 @@
 
 JavaScript Collection Library
 =============================
-### Copyright ©2013 Simon P Chang.
+### Copyright ©2013-2014 Simon P. Chang
 Last Version: 1.0<br>
 Available Collection: [List](#list), [Map](#map), [Stack](#stack), [Queue](#queue), [MultiMap](#multimap), [TreeMap](#treemap), [TreeSet](#treeset), [BiMap](#bimap)<br>
 Scheduled Collection: None<br>
