@@ -1,8 +1,7 @@
 /**
  * Elijah JavaScript Collection Library v1.0
- * Copyright 2013 Simon P Chang.
  * 
- * Author: Simon P Chang
+ * Author: Simon Chang
  * Email: simon.zsh.peter@gmail.com
  * Date: Thu, Feb 28, 2013
  * 
