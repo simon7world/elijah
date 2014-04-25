@@ -251,3 +251,8 @@ Closure Tool
 ============
 Tool: [Closure Compiler](https://developers.google.com/closure/compiler/)<br>
 Version: 20121212
+
+
+License
+=======
+GNU Lesser General Public License（LGPL）
