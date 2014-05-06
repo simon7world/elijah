@@ -255,4 +255,4 @@ Version: 20121212
 
 License
 =======
-GNU Lesser General Public License（LGPL）
+GNU GENERAL PUBLIC LICENSE Version 2
